@@ -55,6 +55,45 @@ Clone the repository or download the expense_tracker.py file:
 git clone https://github.com/Tushar-Mogha/Expense_Tracker
 cd expense-tracker
 
+### Run the Program
+
+Run the script using Python:
+
+- python expense_tracker.py
+
+### Application Menu
+
+1. Add Expense: Enter the expense details (date, category, description, amount).
+2. View Expenses: Display all logged expenses in a tabular format.
+3. Generate Report: View total expenses by category and by month.
+4. Exit: Exit the application.
+
+---
+
+### Example Usage
+
+- Adding an Expense:
+
+
+
+   ![Screenshot 2024-11-21 202331](https://github.com/user-attachments/assets/983f3bbe-5038-4728-b10d-29b2650d054c)
+
+
+
+
+- Viewing Expenses:
+
+
+
+  ![Screenshot 2024-11-21 202339](https://github.com/user-attachments/assets/3070a5ca-54b7-4f13-a41d-f05a43c0f82a)
+
+
+
+- Generating a Report:
+
+
+![Screenshot 2024-11-21 202347](https://github.com/user-attachments/assets/1d9dfba0-f0d4-4b7b-a092-fecbb7c3e942)
+
 
 
 
