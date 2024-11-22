@@ -1,39 +1,40 @@
 import pandas as pd
 from datetime import datetime
+import tkinter as tk
+from tkinter import messagebox
 
 # Initialize an empty DataFrame to store expenses
 columns = ["Date", "Category", "Description", "Amount"]
 expenses = pd.DataFrame(columns=columns)
 
 def add_expense(date, category, description, amount):
-    """
-    Adds a new expense to the DataFrame.
-
-    :param date: Date of the expense (YYYY-MM-DD format).
-    :param category: Expense category (e.g., Food, Rent, Travel).
-    :param description: Short description of the expense.
-    :param amount: Amount spent.
-    """
+    """Adds a new expense to the DataFrame."""
     global expenses
     new_expense = pd.DataFrame(
         [[date, category, description, amount]],
         columns=["Date", "Category", "Description", "Amount"]
     )
     expenses = pd.concat([expenses, new_expense], ignore_index=True)
-    print("Expense added successfully!")
+    messagebox.showinfo("Success", "Expense added successfully!")
 
 def view_expenses():
     """Displays all logged expenses."""
     if expenses.empty:
-        print("No expenses logged yet.")
+        messagebox.showwarning("No Expenses", "No expenses logged yet.")
     else:
-        print("\nLogged Expenses:")
-        print(expenses.to_string(index=False))
+        expenses_window = tk.Toplevel(root)
+        expenses_window.title("Logged Expenses")
+        expenses_window.geometry("600x400")
+
+        text_widget = tk.Text(expenses_window, wrap=tk.WORD)
+        text_widget.pack(expand=True, fill=tk.BOTH)
+
+        text_widget.insert(tk.END, expenses.to_string(index=False))
 
 def generate_report():
     """Generates a summary report of expenses by category and month."""
     if expenses.empty:
-        print("No expenses to generate a report.")
+        messagebox.showwarning("No Expenses", "No expenses to generate a report.")
         return
 
     # Convert Date column to datetime for easier analysis
@@ -46,42 +47,83 @@ def generate_report():
     expenses["Month"] = expenses["Date"].dt.to_period("M")
     monthly_report = expenses.groupby("Month")["Amount"].sum()
 
-    print("\nExpense Report by Category:")
-    print(category_report.to_string())
+    report_window = tk.Toplevel(root)
+    report_window.title("Expense Report")
+    report_window.geometry("600x400")
 
-    print("\nExpense Report by Month:")
-    print(monthly_report.to_string())
+    text_widget = tk.Text(report_window, wrap=tk.WORD)
+    text_widget.pack(expand=True, fill=tk.BOTH)
 
-if __name__ == "__main__":
-    while True:
-        print("\nExpense Tracker")
-        print("1. Add Expense")
-        print("2. View Expenses")
-        print("3. Generate Report")
-        print("4. Exit")
-        
-        choice = input("Enter your choice (1-4): ").strip()
-        
-        if choice == "1":
-            try:
-                date = input("Enter the date (YYYY-MM-DD): ").strip()
-                datetime.strptime(date, "%Y-%m-%d")  # Validate date format
-                category = input("Enter the category (e.g., Food, Rent): ").strip()
-                description = input("Enter a description of the expense: ").strip()
-                amount = float(input("Enter the amount spent: ").strip())
-                add_expense(date, category, description, amount)
-            except ValueError as e:
-                print(f"Invalid input: {e}. Please try again.")
-        
-        elif choice == "2":
-            view_expenses()
+    text_widget.insert(tk.END, "Expense Report by Category:\n")
+    text_widget.insert(tk.END, category_report.to_string())
+    text_widget.insert(tk.END, "\n\nExpense Report by Month:\n")
+    text_widget.insert(tk.END, monthly_report.to_string())
 
-        elif choice == "3":
-            generate_report()
+def add_expense_gui():
+    #nHandles the Add Expense button click event."""
+    try:
+        date = date_entry.get()
+        datetime.strptime(date, "%Y-%m-%d")  # Validate date format
+        category = category_entry.get()
+        description = description_entry.get()
+        amount = float(amount_entry.get())
+        add_expense(date, category, description, amount)
+        clear_entries()
+    except ValueError as e:
+        messagebox.showerror("Invalid Input", f"Invalid input: {e}. Please try again.")
 
-        elif choice == "4":
-            print("Exiting the application. Goodbye!")
-            break
+def clear_entries():
+    #Clears all entry fields
+    date_entry.delete(0, tk.END)
+    category_entry.delete(0, tk.END)
+    description_entry.delete(0, tk.END)
+    amount_entry.delete(0, tk.END)
 
-        else:
-            print("Invalid choice. Please enter a number between 1 and 4.")
+# Set up the Tkinter GUI
+root = tk.Tk()
+root.title("Expense Tracker")
+root.geometry("500x400")
+root.config(bg="#f0f0f0")
+
+# Title label
+title_label = tk.Label(root, text="Expense Tracker", font=("Arial", 24, "bold"), bg="#3b7bbf", fg="white", pady=20)
+title_label.pack(fill="both")
+
+# Date input
+date_label = tk.Label(root, text="Date (YYYY-MM-DD):", font=("Arial", 12), bg="#f0f0f0")
+date_label.pack(pady=5)
+date_entry = tk.Entry(root, font=("Arial", 12))
+date_entry.pack(pady=5)
+
+# Category input
+category_label = tk.Label(root, text="Category (e.g., Food, Rent):", font=("Arial", 12), bg="#f0f0f0")
+category_label.pack(pady=5)
+category_entry = tk.Entry(root, font=("Arial", 12))
+category_entry.pack(pady=5)
+
+# Description input
+description_label = tk.Label(root, text="Description of Expense:", font=("Arial", 12), bg="#f0f0f0")
+description_label.pack(pady=5)
+description_entry = tk.Entry(root, font=("Arial", 12))
+description_entry.pack(pady=5)
+
+# Amount input
+amount_label = tk.Label(root, text="Amount Spent:", font=("Arial", 12), bg="#f0f0f0")
+amount_label.pack(pady=5)
+amount_entry = tk.Entry(root, font=("Arial", 12))
+amount_entry.pack(pady=5)
+
+# Add Expense Button
+add_button = tk.Button(root, text="Add Expense", font=("Arial", 14), bg="#4CAF50", fg="white", command=add_expense_gui)
+add_button.pack(pady=20)
+
+# View Expenses Button
+view_button = tk.Button(root, text="View Expenses", font=("Arial", 14), bg="#2196F3", fg="white", command=view_expenses)
+view_button.pack(pady=10)
+
+# Generate Report Button
+report_button = tk.Button(root, text="Generate Report", font=("Arial", 14), bg="#FF9800", fg="white", command=generate_report)
+report_button.pack(pady=10)
+
+# Run the Tkinter event loop
+root.mainloop()
