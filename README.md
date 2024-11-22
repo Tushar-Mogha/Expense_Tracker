@@ -76,7 +76,8 @@ Run the script using Python:
 
 
 
-   ![Screenshot 2024-11-21 202331](https://github.com/user-attachments/assets/983f3bbe-5038-4728-b10d-29b2650d054c)
+   
+   ![Screenshot 2024-11-22 130037](https://github.com/user-attachments/assets/237ad9d9-e503-4885-8c13-1a6f329bf8db)
 
 
 
@@ -85,15 +86,15 @@ Run the script using Python:
 
 
 
-  ![Screenshot 2024-11-21 202339](https://github.com/user-attachments/assets/3070a5ca-54b7-4f13-a41d-f05a43c0f82a)
+![Screenshot 2024-11-22 164920](https://github.com/user-attachments/assets/97d96dd2-3580-4efd-9901-d15b95fa8497)
 
 
 
 - Generating a Report:
 
 
-![Screenshot 2024-11-21 202347](https://github.com/user-attachments/assets/1d9dfba0-f0d4-4b7b-a092-fecbb7c3e942)
 
+![Screenshot 2024-11-22 164935](https://github.com/user-attachments/assets/7bff06f5-1142-48c0-b340-baa4d113d447)
 
 
 
